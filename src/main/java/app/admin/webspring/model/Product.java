@@ -10,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -21,7 +23,6 @@ public class Product {
 	private Long id; // Mã sản phẩm
 	private String productCode; // Mã sản phẩm riêng biệt để liên kết
 	private String name; // Tên
-	private String category; // Loại: Thuốc trừ sâu, Phân bón, Cây trái
 	private int quantity; // Số lượng
 	private String unit; // Đơn vị: kg, lít, cây
 	private double price; // Giá
@@ -32,6 +33,10 @@ public class Product {
 	private String manufacturer; // Nhà sản xuất
 	private LocalDate manufacturingDate; // Ngày sản xuất
 	private String storageConditions; // Điều kiện bảo quản
+	// Liên kết với bảng Category
+	@ManyToOne
+	@JoinColumn(name = "category_id", referencedColumnName = "id")
+	private Category category; // Đối tượng Category tham chiếu đến bảng Category
 
 	public Long getId() {
 		return id;
@@ -55,14 +60,6 @@ public class Product {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
 	}
 
 	public int getQuantity() {
@@ -144,6 +141,13 @@ public class Product {
 	public void setImages(String images) {
 		this.images = images;
 	}
-	
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
 }

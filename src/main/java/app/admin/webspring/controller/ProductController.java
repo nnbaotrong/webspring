@@ -52,4 +52,10 @@ public class ProductController {
 	public void deleteProduct(@PathVariable Long id) {
 		productService.deleteProduct(id);
 	}
+
+	// Lấy tất cả sản phẩm theo Loại
+	@GetMapping("/category/{categoryName}")
+	public List<Product> getProductsByCategory(@PathVariable String categoryName) {
+		return productService.getProductsByCategory(categoryName);
+	}
 }

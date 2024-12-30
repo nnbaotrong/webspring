@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.admin.webspring.model.Category;
 import app.admin.webspring.model.Fertilizer;
 import app.admin.webspring.model.Fruit;
 import app.admin.webspring.model.Pesticide;
 import app.admin.webspring.model.Product;
+import app.admin.webspring.repository.CategoryRepository;
 import app.admin.webspring.repository.ProductRepository;
 import jakarta.transaction.Transactional;
 
@@ -18,6 +20,9 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository; // Repository để tương tác với cơ sở dữ liệu
+
+	@Autowired
+	private CategoryRepository categoryRepository; // Repository để tương tác với cơ sở dữ liệu
 
 	// Lấy tất cả sản phẩm (có thể lọc thêm theo loại sản phẩm nếu cần)
 	public List<Product> getAllProducts() {
@@ -93,5 +98,11 @@ public class ProductService {
 		} else {
 			throw new RuntimeException("Product not found with id: " + id); // Nếu không tìm thấy sản phẩm
 		}
+	}
+
+	public List<Product> getProductsByCategory(String categoryName) {
+		Category category = categoryRepository.findByName(categoryName)
+				.orElseThrow(() -> new RuntimeException("Category not found"));
+		return productRepository.findByCategory(category);
 	}
 }
