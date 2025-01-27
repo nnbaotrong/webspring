@@ -54,8 +54,8 @@ public class ProductController {
 	}
 
 	// Lấy tất cả sản phẩm theo Loại
-	@GetMapping("/category/{categoryName}")
-	public List<Product> getProductsByCategory(@PathVariable String categoryName) {
-		return productService.getProductsByCategory(categoryName);
+	@GetMapping("/category/{id}")
+	public List<Product> getProductsByCategory(@PathVariable Long id) {
+		return productService.getProductsByCategory(id);
 	}
 }

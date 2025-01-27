@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.admin.webspring.exception.CategoryNotFoundException;
 import app.admin.webspring.model.Category;
 import app.admin.webspring.model.Fertilizer;
 import app.admin.webspring.model.Fruit;
@@ -100,9 +101,19 @@ public class ProductService {
 		}
 	}
 
-	public List<Product> getProductsByCategory(String categoryName) {
-		Category category = categoryRepository.findByName(categoryName)
-				.orElseThrow(() -> new RuntimeException("Category not found"));
+	// Lấy tất cả sản phẩm theo Loại
+	public List<Product> getProductsByCategory(Long categoryId) {
+		// Kiểm tra xem category có tồn tại không
+		Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+
+		// Nếu category không tồn tại, trả về danh sách rỗng hoặc ném ngoại lệ
+		if (!categoryOptional.isPresent()) {
+			// Bạn có thể trả về danh sách rỗng hoặc ném ngoại lệ tùy ý
+			throw new CategoryNotFoundException("Category with ID " + categoryId + " not found");
+		}
+
+		// Trả về danh sách sản phẩm thuộc category
+		Category category = categoryOptional.get();
 		return productRepository.findByCategory(category);
 	}
 }
