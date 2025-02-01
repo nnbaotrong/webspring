@@ -13,8 +13,8 @@ WORKDIR /app
 # Bước 5: Build ứng dụng Spring Boot bằng Maven
 RUN mvn clean package -DskipTests
 
-# Bước 6: Sử dụng image JRE (Java Runtime Environment) để chạy ứng dụng
-FROM openjdk:17-jre-slim
+# Bước 6: Sử dụng lại image OpenJDK để chạy ứng dụng
+FROM openjdk:17-jdk-slim
 
 # Bước 7: Sao chép file JAR đã build từ bước trước
 COPY --from=build /app/target/webspring-0.0.1-SNAPSHOT.jar /webspring.jar
