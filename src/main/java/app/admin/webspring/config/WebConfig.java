@@ -14,7 +14,7 @@ public class WebConfig {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/api/**") // Đường dẫn API cần cho phép
-						.allowedOrigins("http://localhost:3000") // Địa chỉ frontend
+						.allowedOrigins("https://webspringfe.onrender.com") // Địa chỉ frontend http://localhost:3000
 						.allowedMethods("GET", "POST", "PUT", "DELETE")
 						.allowedHeaders("*")
 						.allowCredentials(true);
